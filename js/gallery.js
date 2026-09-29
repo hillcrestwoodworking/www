@@ -1,26 +1,65 @@
-// Gallery grid, category filter and lightbox.
-// Renders into #gallery (full gallery page) or #gallery-preview (home page).
+// Gallery: project/product cards with price, category filter and a photo lightbox.
+// Items come from the Admin page (/api/gallery); js/gallery-data.js is the fallback.
+// Renders into #gallery (gallery page) or #gallery-preview (home page).
 (function () {
-  const { categories, photos } = window.GALLERY;
-  const catName = (id) => (categories.find((c) => c.id === id) || {}).name || id;
-  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const { categories } = window.GALLERY;
+  const category = (id) => categories.find((c) => c.id === id) || { id, name: id, orderAs: "" };
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const money = (n) => "$" + Number(n).toLocaleString("en-US", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
+  const priceText = (it) => (it.price == null ? "" : (it.priceFrom ? "Starting at " : "") + money(it.price));
 
-  let visible = [];
+  let photos = []; // flat list of { src, item, n, of } for the lightbox
   let index = 0;
   let lightbox;
 
-  function tile(p, i) {
-    return `<figure class="tile">
-        <button type="button" data-i="${i}" aria-label="Enlarge: ${esc(p.caption || catName(p.category))}">
-          <img src="${esc(p.src)}" alt="${esc(p.caption || catName(p.category))}" loading="lazy">
-        </button>
-        <figcaption><span class="tag">${esc(catName(p.category))}</span>${esc(p.caption)}</figcaption>
-      </figure>`;
+  async function loadItems() {
+    try {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 6000);
+      const res = await fetch("/api/gallery", { signal: ctrl.signal });
+      clearTimeout(timer);
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data.items)) return data.items;
+      }
+    } catch (e) { /* fall through to the static list */ }
+    return window.GALLERY.items || [];
   }
 
-  function renderGrid(grid, list, emptyHtml) {
-    visible = list;
-    grid.innerHTML = list.length ? list.map(tile).join("") : emptyHtml;
+  function actionLink(it) {
+    const q = new URLSearchParams({ item: category(it.category).orderAs, product: it.title });
+    if (it.price != null) q.set("price", priceText(it));
+    return it.price != null
+      ? `<a class="btn btn-primary btn-sm" href="order.html?${q}">Order This</a>`
+      : `<a class="btn btn-outline btn-sm" href="quote.html?${q}">Get a Quote</a>`;
+  }
+
+  function card(it, firstPhoto) {
+    const cover = it.photos[0];
+    const price = priceText(it);
+    return `<article class="item">
+        <button type="button" class="item-photo" data-i="${firstPhoto}" aria-label="View photos: ${esc(it.title)}">
+          <img src="${esc(cover.thumb || cover.src)}" alt="${esc(it.title)}" loading="lazy">
+          ${it.photos.length > 1 ? `<span class="photo-count">${it.photos.length} photos</span>` : ""}
+        </button>
+        <div class="item-body">
+          <span class="tag">${esc(category(it.category).name)}</span>
+          <h3>${esc(it.title)}</h3>
+          ${price ? `<p class="price">${esc(price)}</p>` : ""}
+          ${it.description ? `<p class="desc">${esc(it.description)}</p>` : ""}
+          <div class="item-actions">${actionLink(it)}</div>
+        </div>
+      </article>`;
+  }
+
+  function renderGrid(grid, items, emptyHtml) {
+    photos = [];
+    const html = items.map((it) => {
+      const first = photos.length;
+      it.photos.forEach((p, n) => photos.push({ src: p.src, item: it, n: n + 1, of: it.photos.length }));
+      return card(it, first);
+    });
+    grid.innerHTML = items.length ? html.join("") : emptyHtml;
   }
 
   function openLightbox(i) {
@@ -70,16 +109,19 @@
   }
 
   function showCurrent() {
-    const p = visible[index];
+    const p = photos[index];
     const img = lightbox.querySelector("img");
     img.src = p.src;
-    img.alt = p.caption || catName(p.category);
+    img.alt = p.item.title;
+    const price = priceText(p.item);
     lightbox.querySelector("figcaption").textContent =
-      [catName(p.category), p.caption].filter(Boolean).join(" — ");
+      [p.item.title, price].filter(Boolean).join(" · ") + (p.of > 1 ? `  (${p.n} of ${p.of})` : "");
+    const single = photos.length < 2;
+    lightbox.querySelector(".lb-prev").hidden = lightbox.querySelector(".lb-next").hidden = single;
   }
 
   function step(d) {
-    index = (index + d + visible.length) % visible.length;
+    index = (index + d + photos.length) % photos.length;
     showCurrent();
   }
 
@@ -95,48 +137,56 @@
     });
   }
 
+  const loaded = loadItems();
+
   // Full gallery page
   const grid = document.getElementById("gallery");
   if (grid) {
     const filters = document.getElementById("gallery-filters");
     const all = [{ id: "all", name: "All" }, ...categories];
-    const counts = (id) => (id === "all" ? photos.length : photos.filter((p) => p.category === id).length);
-    filters.innerHTML = all
-      .map((c) => `<button type="button" class="chip" data-cat="${c.id}">${esc(c.name)} <small>${counts(c.id)}</small></button>`)
-      .join("");
-
-    function select(cat) {
-      if (!all.some((c) => c.id === cat)) cat = "all";
-      filters.querySelectorAll(".chip").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.cat === cat)));
-      const list = cat === "all" ? photos : photos.filter((p) => p.category === cat);
-      const label = cat === "all" ? "our work" : catName(cat).toLowerCase();
-      renderGrid(grid, list, `
-        <div class="empty">
-          <p>Photos of ${esc(label)} are coming soon.</p>
-          <p>Want to see examples? <a href="quote.html">Ask for a quote</a> and we'll send some over.</p>
-        </div>`);
-      const url = new URL(location.href);
-      if (cat === "all") url.searchParams.delete("cat");
-      else url.searchParams.set("cat", cat);
-      history.replaceState(null, "", url);
-    }
-
-    filters.addEventListener("click", (e) => {
-      const b = e.target.closest(".chip");
-      if (b) select(b.dataset.cat);
-    });
     wireClicks(grid);
-    select(new URLSearchParams(location.search).get("cat") || "all");
+    grid.innerHTML = `<div class="empty">Loading…</div>`;
+
+    loaded.then((items) => {
+      const count = (id) => (id === "all" ? items.length : items.filter((it) => it.category === id).length);
+      filters.innerHTML = all
+        .map((c) => `<button type="button" class="chip" data-cat="${c.id}">${esc(c.name)} <small>${count(c.id)}</small></button>`)
+        .join("");
+
+      function select(cat) {
+        if (!all.some((c) => c.id === cat)) cat = "all";
+        filters.querySelectorAll(".chip").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.cat === cat)));
+        const list = cat === "all" ? items : items.filter((it) => it.category === cat);
+        const label = cat === "all" ? "our work" : category(cat).name.toLowerCase();
+        renderGrid(grid, list, `
+          <div class="empty">
+            <p>Photos of ${esc(label)} are coming soon.</p>
+            <p>Want to see examples? <a href="quote.html">Ask for a quote</a> and we'll send some over.</p>
+          </div>`);
+        const url = new URL(location.href);
+        if (cat === "all") url.searchParams.delete("cat");
+        else url.searchParams.set("cat", cat);
+        history.replaceState(null, "", url);
+      }
+
+      filters.addEventListener("click", (e) => {
+        const b = e.target.closest(".chip");
+        if (b) select(b.dataset.cat);
+      });
+      select(new URLSearchParams(location.search).get("cat") || "all");
+    });
   }
 
-  // Home page preview: first 6 photos, hidden entirely if there are none yet
+  // Home page preview: first 6 items, hidden entirely if there are none yet
   const preview = document.getElementById("gallery-preview");
   if (preview) {
-    if (!photos.length) {
-      preview.closest("section").hidden = true;
-    } else {
-      renderGrid(preview, photos.slice(0, 6), "");
+    const section = preview.closest("section");
+    section.hidden = true;
+    loaded.then((items) => {
+      if (!items.length) return;
+      renderGrid(preview, items.slice(0, 6), "");
       wireClicks(preview);
-    }
+      section.hidden = false;
+    });
   }
 })();

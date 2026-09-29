@@ -68,7 +68,10 @@
         </div>
         <nav class="footer-nav">${links.map(([h, l]) => `<a href="${h}">${l}</a>`).join("")}</nav>
       </div>
-      <div class="container footer-copy">© ${new Date().getFullYear()} ${S.name}</div>`;
+      <div class="container footer-copy">
+        <span>© ${new Date().getFullYear()} ${S.name}</span>
+        <a class="admin-link" href="admin.html" rel="nofollow">Admin</a>
+      </div>`;
   }
 
   // Fill any element marked data-site="phone" etc.

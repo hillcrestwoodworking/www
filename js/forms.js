@@ -23,6 +23,25 @@
     closedNote.textContent = `Not available on ${S.closedDays.map((d) => dayNames[d] + "s").join(", ")}.`;
   }
 
+  // Coming from a gallery item's "Order This" / "Get a Quote" button: pre-fill the form.
+  const q = new URLSearchParams(location.search);
+  const product = q.get("product");
+  const form0 = document.querySelector("form[data-inquiry]");
+  if (product && form0) {
+    const select = form0.querySelector('select[name="item"], select[name="project_type"]');
+    const option = select && [...select.options].find((o) => o.value === q.get("item"));
+    if (option) select.value = option.value;
+    const details = form0.querySelector('textarea[name="details"]');
+    const price = q.get("price");
+    const line = `Gallery item: ${product}${price ? ` (${price})` : ""}`.slice(0, 200);
+    if (details) details.value = line + "\n";
+    const hidden = document.createElement("input");
+    hidden.type = "hidden";
+    hidden.name = "gallery_item";
+    hidden.value = line;
+    form0.appendChild(hidden);
+  }
+
   document.querySelectorAll("form[data-inquiry]").forEach((form) => {
     const status = form.querySelector(".form-status");
     const button = form.querySelector('button[type="submit"]');
