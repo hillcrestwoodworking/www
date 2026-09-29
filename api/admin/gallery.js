@@ -6,7 +6,7 @@ import { json, error } from "../_lib/http.js";
 function guard(request, { write = false } = {}) {
   if (!isAdmin(request)) return error("Please sign in again.", 401);
   if (write && !fromAdminPage(request)) return error("Request blocked.", 403);
-  if (!storageConfigured()) return error("Photo storage isn't connected yet (BLOB_READ_WRITE_TOKEN).", 503);
+  if (!storageConfigured()) return error("Photo storage isn't connected yet (connect a Blob store in Vercel → Storage).", 503);
   return null;
 }
 

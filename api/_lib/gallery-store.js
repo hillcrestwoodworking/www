@@ -7,7 +7,9 @@ const PHOTO_PREFIX = "gallery/";
 const BLOB_URL = /^https:\/\/[a-z0-9]+\.public\.blob\.vercel-storage\.com\/gallery\/[\w\-./]+$/i;
 const isBlobUrl = (u) => typeof u === "string" && BLOB_URL.test(u) && !u.includes("..");
 
-export const storageConfigured = () => !!process.env.BLOB_READ_WRITE_TOKEN;
+// Either a read-write token, or a connected store ID (Vercel then signs requests
+// automatically with the function's OIDC token; @vercel/blob handles that).
+export const storageConfigured = () => !!(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
 
 export class ValidationError extends Error {}
 

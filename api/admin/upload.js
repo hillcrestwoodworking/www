@@ -10,7 +10,7 @@ const MAX_BYTES = 4 * 1024 * 1024;
 export async function POST(request) {
   if (!isAdmin(request)) return error("Please sign in again.", 401);
   if (!fromAdminPage(request)) return error("Request blocked.", 403);
-  if (!storageConfigured()) return error("Photo storage isn't connected yet (BLOB_READ_WRITE_TOKEN).", 503);
+  if (!storageConfigured()) return error("Photo storage isn't connected yet (connect a Blob store in Vercel → Storage).", 503);
 
   const type = (request.headers.get("content-type") || "").split(";")[0].trim();
   if (!TYPES.has(type)) return error("Photos must be JPEG, PNG or WebP.", 415);
