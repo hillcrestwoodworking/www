@@ -26,7 +26,7 @@ Customers can't change anything. Every admin action is checked on the server, th
 
 ### Setup (one time)
 
-1. **Photo storage:** Vercel → your project → **Storage → Create → Blob** → connect it to the project (all environments). Vercel adds `BLOB_READ_WRITE_TOKEN` automatically.
+1. **Photo storage:** Vercel → your project → **Storage → Create → Blob**. Choose **Public** access (gallery photos must be viewable by visitors), leave the variable prefix blank, and connect it to the project. Vercel adds `BLOB_STORE_ID` (and `BLOB_READ_WRITE_TOKEN` if you tick the token box); either works.
 2. **Password:** Vercel → project → **Settings → Environment Variables** → add `ADMIN_PASSWORD` (at least 8 characters; longer is better) for Production, Preview and Development.
 3. **Redeploy** (Deployments → ⋯ → Redeploy) so the new variables take effect.
 
@@ -52,7 +52,7 @@ npm run dev        # runs `vercel dev` — site + admin API at http://localhost:
 The first run asks you to log in to Vercel and link this folder to the project. Local secrets go in `.env.local` (git-ignored; see `.env.example`):
 
 - `ADMIN_PASSWORD`: any password for local testing
-- `BLOB_READ_WRITE_TOKEN`: copy from Vercel → Storage → your Blob store → **.env.local** tab
+- `BLOB_READ_WRITE_TOKEN`: copy from Vercel → Storage → your Blob store → **.env.local** tab (or run `npx vercel env pull .env.local`, then re-add `ADMIN_PASSWORD`, since pulling overwrites the file)
 
 Note: the local site uses the **same** Blob store as the live site, so photos you add while testing appear live. Hide or delete test items when you're done, or create a second Blob store just for Development.
 
