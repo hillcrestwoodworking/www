@@ -41,6 +41,20 @@
         else if (e.target.closest(".lb-prev")) step(-1);
         else if (e.target.closest(".lb-next")) step(1);
       });
+      // Swipe left/right on phones to move between photos.
+      let startX = null, startY = 0;
+      lightbox.addEventListener("touchstart", (e) => {
+        if (e.touches.length !== 1) return (startX = null); // ignore pinch-zoom
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      }, { passive: true });
+      lightbox.addEventListener("touchend", (e) => {
+        if (startX === null) return;
+        const dx = e.changedTouches[0].clientX - startX;
+        const dy = e.changedTouches[0].clientY - startY;
+        startX = null;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+      }, { passive: true });
       document.addEventListener("keydown", (e) => {
         if (!lightbox.classList.contains("open")) return;
         if (e.key === "Escape") closeLightbox();
@@ -50,7 +64,8 @@
     }
     showCurrent();
     lightbox.classList.add("open");
-    document.body.style.overflow = "hidden";
+    // Lock page scrolling behind the viewer (html + body needed for iOS Safari).
+    document.documentElement.style.overflow = document.body.style.overflow = "hidden";
     lightbox.querySelector(".lb-close").focus();
   }
 
@@ -70,7 +85,7 @@
 
   function closeLightbox() {
     lightbox.classList.remove("open");
-    document.body.style.overflow = "";
+    document.documentElement.style.overflow = document.body.style.overflow = "";
   }
 
   function wireClicks(grid) {

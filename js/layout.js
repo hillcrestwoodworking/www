@@ -28,11 +28,29 @@
         </nav>
       </div>`;
     const toggle = header.querySelector(".nav-toggle");
-    toggle.addEventListener("click", () => {
-      const open = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", String(!open));
-      header.classList.toggle("nav-open", !open);
-    });
+    const setOpen = (open) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      header.classList.toggle("nav-open", open);
+    };
+    toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+    // Close the phone menu on a link tap, a tap outside it, Escape, or rotating to a wide screen.
+    header.querySelector(".site-nav").addEventListener("click", (e) => e.target.closest("a") && setOpen(false));
+    document.addEventListener("click", (e) => !header.contains(e.target) && setOpen(false));
+    document.addEventListener("keydown", (e) => e.key === "Escape" && setOpen(false));
+    matchMedia("(min-width: 861px)").addEventListener("change", (e) => e.matches && setOpen(false));
+  }
+
+  // Phones: sticky Call / Get a Quote bar on browsing pages (not on form pages,
+  // where it would cover fields and jump around with the on-screen keyboard).
+  if (page === "index" || page === "gallery") {
+    const bar = document.createElement("div");
+    bar.className = "action-bar";
+    bar.innerHTML = [
+      S.phone && `<a class="btn btn-outline" href="tel:${S.phone.replace(/[^\d+]/g, "")}">Call</a>`,
+      `<a class="btn btn-primary" href="quote.html">Get an Estimate</a>`,
+    ].filter(Boolean).join("");
+    document.body.appendChild(bar);
+    document.body.classList.add("has-action-bar");
   }
 
   const footer = document.getElementById("site-footer");
