@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Place an Order | Hillcrest Woodworking</title>
+  <meta name="description" content="Order a custom crawl space door, shed door, barn door, mailbox or framing job from Hillcrest Woodworking.">
+  <meta name="theme-color" content="#1c1d20">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Orders</span>
+        <h1>Place an Order</h1>
+        <p>Ready to go? Send us your order details. We'll confirm the price and timeline before we start building.</p>
+      </div>
+    </div>
+
+    <section>
+      <div class="container form-layout">
+        <form class="panel" data-inquiry="New order" novalidate
+              data-success="<strong>Order received — thank you!</strong> We'll contact you to confirm the details and total. <br>If you've already agreed on a price, you can <a href='pay.html'>pay your deposit now</a>.">
+          <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off">
+
+          <fieldset class="form-section">
+            <legend>What are you ordering?</legend>
+            <div class="form-grid">
+              <div>
+                <label for="o-item">Item <span class="req">*</span></label>
+                <select id="o-item" name="item" required>
+                  <option value="">Choose one…</option>
+                  <option>Crawl Space Door</option>
+                  <option>Shed Door</option>
+                  <option>Barn Door</option>
+                  <option>Mailbox</option>
+                  <option>Framing</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div><label for="o-qty">Quantity <span class="req">*</span></label><input id="o-qty" name="quantity" type="number" min="1" value="1" required></div>
+              <div class="full"><label for="o-size">Size / dimensions <span class="req">*</span></label><input id="o-size" name="dimensions" required placeholder='e.g. 36" × 80", or "measure on site"'></div>
+              <div>
+                <label for="o-finish">Finish</label>
+                <select id="o-finish" name="finish">
+                  <option>Not sure yet</option>
+                  <option>Painted</option>
+                  <option>Stained</option>
+                  <option>Natural / sealed</option>
+                  <option>Unfinished</option>
+                </select>
+              </div>
+              <div><label for="o-color">Color / stain</label><input id="o-color" name="color" placeholder="Optional"></div>
+              <div class="full"><label for="o-ref">Quote # <span class="hint" style="display:inline">(if we already gave you an estimate)</span></label><input id="o-ref" name="quote_reference"></div>
+              <div class="full"><label for="o-details">Order details</label><textarea id="o-details" name="details" placeholder="Style, hardware, wood type, or anything else."></textarea></div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>Getting it to you</legend>
+            <div class="form-grid">
+              <div class="full">
+                <div class="choice-group">
+                  <label class="choice"><input type="radio" name="fulfillment" value="Pickup" required> Pickup</label>
+                  <label class="choice"><input type="radio" name="fulfillment" value="Delivery"> Delivery</label>
+                  <label class="choice"><input type="radio" name="fulfillment" value="Delivery + installation"> Delivery + installation</label>
+                </div>
+              </div>
+              <div class="full"><label for="o-addr">Delivery address</label><input id="o-addr" name="address" autocomplete="street-address"></div>
+              <div><label for="o-by">Needed by</label><input id="o-by" name="needed_by" type="date"></div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>Your info</legend>
+            <div class="form-grid">
+              <div><label for="o-name">Name <span class="req">*</span></label><input id="o-name" name="name" autocomplete="name" required></div>
+              <div><label for="o-phone">Phone <span class="req">*</span></label><input id="o-phone" name="phone" type="tel" autocomplete="tel" required></div>
+              <div class="full"><label for="o-email">Email <span class="req">*</span></label><input id="o-email" name="email" type="email" autocomplete="email" required></div>
+            </div>
+          </fieldset>
+
+          <div class="form-actions"><button class="btn btn-primary btn-block" type="submit">Submit Order</button></div>
+          <div class="form-status" role="status" hidden></div>
+        </form>
+
+        <aside class="panel">
+          <h3>How ordering works</h3>
+          <ol class="aside-list">
+            <li>Submit your order. There's no charge yet.</li>
+            <li>We confirm the details, final price and build time with you.</li>
+            <li>Pay your deposit on the <a href="pay.html">Pay page</a> using PayPal or a card.</li>
+            <li>We build it and deliver, install or have it ready for pickup.</li>
+          </ol>
+          <p class="muted" style="margin:18px 0 0">Not sure what you need? <a href="quote.html">Get a quote first</a>.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/forms.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Make a Payment | Hillcrest Woodworking</title>
+  <meta name="description" content="Pay a deposit or balance to Hillcrest Woodworking securely with PayPal or a card.">
+  <meta name="theme-color" content="#1c1d20">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Payments</span>
+        <h1>Make a Payment</h1>
+        <p>Pay a deposit or balance securely through PayPal. You can use your PayPal account or a debit/credit card.</p>
+      </div>
+    </div>
+
+    <section>
+      <div class="container form-layout">
+        <div class="panel">
+          <form id="pay-form" novalidate onsubmit="return false">
+            <fieldset class="form-section">
+              <legend>Payment details</legend>
+              <div class="form-grid">
+                <div class="full"><label for="pay-name">Your name <span class="req">*</span></label><input id="pay-name" autocomplete="name" required></div>
+                <div>
+                  <label for="pay-amount">Amount (USD) <span class="req">*</span></label>
+                  <input id="pay-amount" type="number" min="1" step="0.01" inputmode="decimal" required placeholder="0.00">
+                </div>
+                <div>
+                  <label for="pay-ref">Quote or order # <span class="req">*</span></label>
+                  <input id="pay-ref" required placeholder="So we can match your payment">
+                </div>
+              </div>
+            </fieldset>
+          </form>
+          <div id="paypal-buttons"></div>
+          <div id="pay-status" class="form-status" role="status" hidden></div>
+        </div>
+
+        <aside class="panel">
+          <h3>Before you pay</h3>
+          <ul class="aside-list">
+            <li>Please pay only an amount we've agreed on for your quote or order.</li>
+            <li>Payments go directly to Hillcrest Woodworking through PayPal. We never see your card number.</li>
+            <li>You'll get a receipt from PayPal by email.</li>
+          </ul>
+          <p class="muted" style="margin:18px 0 0">
+            Questions about a payment?<br>
+            <span data-site="phone" data-hide-empty></span><br>
+            <span data-site="email" data-hide-empty></span>
+          </p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/pay.js"></script>
+</body>
+</html>

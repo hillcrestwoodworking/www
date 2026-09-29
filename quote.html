@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Get a Quote | Hillcrest Woodworking</title>
+  <meta name="description" content="Request an estimate from Hillcrest Woodworking for crawl space doors, shed doors, barn doors, mailboxes or framing.">
+  <meta name="theme-color" content="#1c1d20">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Estimates</span>
+        <h1>Get a Quote</h1>
+        <p>Tell us about your project and we'll get back to you with an estimate.</p>
+      </div>
+    </div>
+
+    <section>
+      <div class="container form-layout">
+        <form class="panel" data-inquiry="Quote request" novalidate
+              data-success="<strong>Thanks — your quote request is in!</strong> We'll review it and get back to you with an estimate soon.">
+          <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off">
+
+          <fieldset class="form-section">
+            <legend>Your info</legend>
+            <div class="form-grid">
+              <div><label for="q-name">Name <span class="req">*</span></label><input id="q-name" name="name" autocomplete="name" required></div>
+              <div><label for="q-phone">Phone <span class="req">*</span></label><input id="q-phone" name="phone" type="tel" autocomplete="tel" required></div>
+              <div><label for="q-email">Email <span class="req">*</span></label><input id="q-email" name="email" type="email" autocomplete="email" required></div>
+              <div><label for="q-city">Project location</label><input id="q-city" name="location" autocomplete="address-level2" placeholder="Town or address"></div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>Your project</legend>
+            <div class="form-grid">
+              <div>
+                <label for="q-type">What do you need? <span class="req">*</span></label>
+                <select id="q-type" name="project_type" required>
+                  <option value="">Choose one…</option>
+                  <option>Crawl Space Door</option>
+                  <option>Shed Door</option>
+                  <option>Barn Door</option>
+                  <option>Mailbox</option>
+                  <option>Framing</option>
+                  <option>Something else</option>
+                </select>
+              </div>
+              <div><label for="q-qty">Quantity</label><input id="q-qty" name="quantity" type="number" min="1" value="1"></div>
+              <div class="full">
+                <label for="q-size">Size / dimensions</label>
+                <input id="q-size" name="dimensions" placeholder='e.g. 32" wide × 24" tall'>
+                <span class="hint">Rough measurements are fine. We can measure on site.</span>
+              </div>
+              <div>
+                <label for="q-finish">Finish</label>
+                <select id="q-finish" name="finish">
+                  <option>Not sure yet</option>
+                  <option>Painted</option>
+                  <option>Stained</option>
+                  <option>Natural / sealed</option>
+                  <option>Unfinished</option>
+                </select>
+              </div>
+              <div>
+                <label for="q-when">When do you need it?</label>
+                <select id="q-when" name="timeline">
+                  <option>Flexible</option>
+                  <option>As soon as possible</option>
+                  <option>Within a month</option>
+                  <option>1–3 months</option>
+                </select>
+              </div>
+              <div class="full">
+                <label>Need installation?</label>
+                <div class="choice-group">
+                  <label class="choice"><input type="radio" name="installation" value="Yes"> Yes</label>
+                  <label class="choice"><input type="radio" name="installation" value="No"> No</label>
+                  <label class="choice"><input type="radio" name="installation" value="Not sure" checked> Not sure</label>
+                </div>
+              </div>
+              <div class="full">
+                <label for="q-details">Project details <span class="req">*</span></label>
+                <textarea id="q-details" name="details" required placeholder="Wood type, style, color, hardware, or anything else we should know."></textarea>
+                <span class="hint">Have photos of the space or a style you like? Mention it here and we'll ask you to text or email them.</span>
+              </div>
+              <div class="full">
+                <label>Best way to reach you</label>
+                <div class="choice-group">
+                  <label class="choice"><input type="radio" name="contact_by" value="Phone call" checked> Phone call</label>
+                  <label class="choice"><input type="radio" name="contact_by" value="Text"> Text</label>
+                  <label class="choice"><input type="radio" name="contact_by" value="Email"> Email</label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="form-actions"><button class="btn btn-primary btn-block" type="submit">Send Quote Request</button></div>
+          <div class="form-status" role="status" hidden></div>
+        </form>
+
+        <aside class="panel">
+          <h3>What happens next</h3>
+          <ol class="aside-list">
+            <li>We review your request.</li>
+            <li>We'll reach out with questions or to set up a time to measure.</li>
+            <li>You get a written estimate.</li>
+          </ol>
+          <h3 style="margin-top:24px">Rather talk?</h3>
+          <p class="muted" style="margin:0">
+            <span data-site="phone" data-hide-empty></span><br>
+            <span data-site="email" data-hide-empty></span>
+          </p>
+          <p style="margin:18px 0 0"><a href="schedule.html">Schedule an on-site visit →</a></p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/forms.js"></script>
+</body>
+</html>
