@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Schedule a Date | Hillcrest Woodworking</title>
+  <meta name="description" content="Pick a date with Hillcrest Woodworking for an on-site estimate, delivery, installation or pickup.">
+  <meta name="theme-color" content="#1c1d20">
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="icon" href="favicon.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Hillcrest">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <script src="js/platform.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Scheduling</span>
+        <h1>Schedule a Date</h1>
+        <p>Pick a day for measuring, delivery, installation or pickup. We'll confirm the time with you.</p>
+      </div>
+    </div>
+
+    <section>
+      <div class="container form-layout">
+        <form class="panel" data-inquiry="Schedule request" novalidate
+              data-success="<strong>Your request is in!</strong> We'll call or email to confirm your date and time.">
+          <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off">
+
+          <fieldset class="form-section">
+            <legend>What's the visit for?</legend>
+            <div class="choice-group">
+              <label class="choice"><input type="radio" name="visit_type" value="On-site estimate / measuring" checked required> Estimate / measuring</label>
+              <label class="choice"><input type="radio" name="visit_type" value="Delivery / installation"> Delivery / installation</label>
+              <label class="choice"><input type="radio" name="visit_type" value="Pickup at shop"> Pickup</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>Pick a date</legend>
+            <div class="form-grid">
+              <div>
+                <label for="s-date">Preferred date <span class="req">*</span></label>
+                <input id="s-date" name="preferred_date" type="date" required>
+                <span class="hint" data-closed-days></span>
+              </div>
+              <div>
+                <label for="s-alt">Backup date</label>
+                <input id="s-alt" name="backup_date" type="date">
+              </div>
+              <div class="full">
+                <label>Time of day</label>
+                <div class="choice-group">
+                  <label class="choice"><input type="radio" name="time_of_day" value="Morning"> Morning</label>
+                  <label class="choice"><input type="radio" name="time_of_day" value="Afternoon"> Afternoon</label>
+                  <label class="choice"><input type="radio" name="time_of_day" value="Either" checked> Either</label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>Your info</legend>
+            <div class="form-grid">
+              <div><label for="s-name">Name <span class="req">*</span></label><input id="s-name" name="name" autocomplete="name" required></div>
+              <div><label for="s-phone">Phone <span class="req">*</span></label><input id="s-phone" name="phone" type="tel" autocomplete="tel" required></div>
+              <div><label for="s-email">Email <span class="req">*</span></label><input id="s-email" name="email" type="email" autocomplete="email" required></div>
+              <div><label for="s-ref">Quote or order # <span class="hint" style="display:inline">(if you have one)</span></label><input id="s-ref" name="reference"></div>
+              <div class="full"><label for="s-addr">Address</label><input id="s-addr" name="address" autocomplete="street-address" placeholder="Where should we come? (not needed for pickup)"></div>
+              <div class="full"><label for="s-notes">Notes</label><textarea id="s-notes" name="notes" placeholder="Gate codes, what we'll be looking at, anything helpful."></textarea></div>
+            </div>
+          </fieldset>
+
+          <div class="form-actions"><button class="btn btn-primary btn-block" type="submit">Request This Date</button></div>
+          <div class="form-status" role="status" hidden></div>
+        </form>
+
+        <aside class="panel">
+          <h3>Good to know</h3>
+          <ul class="aside-list">
+            <li>This is a request. Your date isn't booked until we confirm it.</li>
+            <li>If your day doesn't work, we'll offer the closest one that does.</li>
+            <li>Haven't gotten a quote yet? <a href="quote.html">Start here</a>.</li>
+          </ul>
+          <h3 style="margin-top:24px">Questions?</h3>
+          <p class="muted" style="margin:0">
+            <span data-site="phone" data-hide-empty></span><br>
+            <span data-site="email" data-hide-empty></span>
+          </p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/forms.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "hillcrest-woodworking-www",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.8.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

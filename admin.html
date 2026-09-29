@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin | Hillcrest Woodworking</title>
+  <meta name="theme-color" content="#1c1d20">
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="icon" href="favicon.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <script src="js/platform.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="admin">
+  <header id="site-header"></header>
+
+  <main>
+    <div class="page-hero">
+      <div class="container admin-hero">
+        <div>
+          <span class="eyebrow">Owner only</span>
+          <h1>Admin</h1>
+        </div>
+        <button id="logout" class="btn btn-outline btn-sm" type="button" hidden>Log Out</button>
+      </div>
+    </div>
+
+    <section>
+      <div class="container admin-wrap">
+        <div id="notice" class="form-status error" role="alert" hidden></div>
+
+        <!-- Loading -->
+        <div id="view-loading" class="empty">Loading…</div>
+
+        <!-- Log in -->
+        <form id="view-login" class="panel admin-login" hidden novalidate>
+          <h2>Log In</h2>
+          <p class="muted">Enter the admin password to manage gallery photos and prices.</p>
+          <label for="password">Password</label>
+          <input id="password" type="password" autocomplete="current-password" required>
+          <div class="form-actions"><button class="btn btn-primary btn-block" type="submit">Log In</button></div>
+          <div id="login-status" class="form-status error" role="alert" hidden></div>
+        </form>
+
+        <!-- Item list -->
+        <div id="view-list" hidden>
+          <div class="admin-toolbar">
+            <div>
+              <h2>Gallery Items</h2>
+              <p class="muted" id="list-summary"></p>
+            </div>
+            <button id="add-item" class="btn btn-primary" type="button">+ Add Item</button>
+          </div>
+          <ul id="item-list" class="admin-list"></ul>
+          <p class="muted admin-tip">Changes save right away and show on the site within about a minute. Items at the top of the list show first.</p>
+        </div>
+
+        <!-- Add / edit item -->
+        <form id="view-edit" class="panel" hidden novalidate>
+          <h2 id="edit-heading">Add Item</h2>
+
+          <fieldset class="form-section">
+            <legend>Photos</legend>
+            <div id="e-photos" class="admin-photos"></div>
+            <label class="btn btn-outline btn-block admin-add-photos">
+              + Add Photos
+              <input id="e-files" type="file" accept="image/*" multiple>
+            </label>
+            <span class="hint">The first photo is the cover. Photos are resized automatically before uploading.</span>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>Details</legend>
+            <div class="form-grid">
+              <div class="full"><label for="e-title">Title <span class="req">*</span></label><input id="e-title" maxlength="80" required placeholder="e.g. Cedar Crawl Space Door"></div>
+              <div class="full">
+                <label for="e-category">Category <span class="req">*</span></label>
+                <select id="e-category" required></select>
+              </div>
+              <div>
+                <label for="e-price">Price ($)</label>
+                <input id="e-price" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Leave blank for “Get a Quote”">
+              </div>
+              <div class="admin-check">
+                <label class="choice"><input id="e-from" type="checkbox"> Show as “Starting at”</label>
+              </div>
+              <div class="full"><label for="e-desc">Description</label><textarea id="e-desc" maxlength="600" placeholder="Size, wood, finish, what makes it special…"></textarea></div>
+              <div class="full">
+                <label class="choice"><input id="e-visible" type="checkbox" checked> Show on the website</label>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="form-actions admin-edit-actions">
+            <button id="e-cancel" class="btn btn-outline" type="button">Cancel</button>
+            <button id="e-save" class="btn btn-primary" type="submit">Save Item</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+  <footer id="site-footer"></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/gallery-data.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
