@@ -400,6 +400,45 @@ input:user-invalid, select:user-invalid, textarea:user-invalid { border-color: v
 .desc { color: var(--muted); font-size: .93rem; margin-bottom: 12px; white-space: pre-line; }
 .item-actions { margin-top: auto; padding-top: 4px; }
 
+/* ---------- Events (temporary section on the home page) ---------- */
+.events-section {
+  position: relative;
+  background: linear-gradient(180deg, var(--neon-soft), transparent 45%), var(--bg);
+}
+/* neon horizontal divider lines above and below the section */
+.events-section::before, .events-section::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon) 15%, var(--neon) 85%, transparent);
+  box-shadow: 0 0 12px rgba(57, 255, 20, .45);
+}
+.events-section::before { top: 0; }
+.events-section::after { bottom: 0; }
+.events-list { display: grid; gap: 28px; }
+/* thin divider between events when there's more than one */
+.event + .event { padding-top: 28px; border-top: 1px solid var(--border); }
+.event { display: grid; gap: 24px; align-items: center; }
+@media (min-width: 900px) { .event { grid-template-columns: 1.35fr 1fr; } }
+.event-image { display: block; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: #111; }
+.event-image img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; }
+.event-body { display: grid; grid-template-columns: auto 1fr; gap: 14px 18px; align-items: start; }
+.event-date {
+  display: grid; place-items: center; width: 72px; padding: 8px 0 10px;
+  border: 2px solid var(--neon); border-radius: 10px; box-shadow: var(--neon-glow); text-align: center; line-height: 1;
+}
+.event-date span { color: var(--neon); font: 600 .9rem var(--display); letter-spacing: .12em; text-transform: uppercase; }
+.event-date strong { font: 600 2.2rem var(--display); margin-top: 4px; }
+.event-body h3 { font-size: 1.5rem; margin-bottom: 4px; }
+.event-when { color: var(--neon); font-weight: 600; margin: 0 0 6px; }
+.event-where { color: var(--muted); margin: 0; }
+.event-where strong { color: var(--text); }
+.event-desc, .event-actions { grid-column: 1 / -1; }
+.event-desc { color: var(--muted); margin: 0; }
+@media (max-width: 600px) {
+  .event-actions .btn { flex: 1 1 100%; }
+  .event-date { width: 62px; }
+  .event-date strong { font-size: 1.9rem; }
+}
+
 /* ---------- Admin ---------- */
 .admin-hero { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
 .admin-hero h1 { margin: 0; }
